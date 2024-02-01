@@ -1,4 +1,4 @@
-### _欢迎阅读whalecloud-web的wiki，我是项目开发者**zhengint**，容我介绍这个项目_
+### _欢迎阅读whalecloud-web的开发文档，我是项目开发者**zhengint**，容我介绍这个项目_
 
 这个项目是一个论坛类项目,使用springboot+mybatis+thymeleaf开发，是我趁寒假的时间开发的，目前仍处于开发期，基于底层功能的实现，我将这个项目上线并开源，在线访问：[whalecloud](https://web.whalecloud.site)
 
