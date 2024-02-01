@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html" http-equiv="Content-Type" charset="UTF-8">
+    <title th:text="${question.title}"></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/whalecloud.css"/>
+    <!-- 引入 Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css">
+
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- 引入 Bootstrap JS -->
+
+
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4><span th:text="${question.title}"></span></h4>
+                <span class="text-desc">
+                ·作者:<span th:text="${question.user.name}"></span>
+                | 阅读数:<span th:text="${question.viewCount}"></span>
+                | 发布时间:<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+            </span>
+                <hr>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}"></div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <a th:href="@{'/publish/'+${question.id}}" class="whalecloud-menu" th:if="${session.user != null && session.user.id == question.creator}">
+                    <span class="glyphicon glyphicon-pencil w" aria-hidden="true">
+                </span>编辑</a>
+            </div>
+
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading commentname">
+                                <span th:text="${question.user.name}"></span>
+                            </h5>
+                        </div>
+                    </div>
+                    <input type="hidden" id="question_id" th:value="${question.id}">
+                    <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
+                    <button type="button" class="btn btn-success comment-btn" onclick="post()">回复</button>
+                </div>
+
+            <h4 class="commentcount">
+                <span th:text="${question.commentCount}"></span> 个回复
+            </h4>
+
+            <hr class="col-lg-12 col-sm-12 col-md-12 col-xs-12 comment-sp">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 comments" th:each="comment:${comments}" >
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded"
+                                 th:src="${comment.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            <span th:text="${comment.name}"></span>
+                        </h5>
+                        <div class="commentcontent" th:text="${comment.content}"></div>
+                        <div class="menu">
+                            <span th:data-comment-id="${comment.id}" class="like" onclick="likeComment(this)"><svg t="1706420628793" class="icon like" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8306" width="20" height="25"><path d="M190.193225 471.411583c14.446014 0 26.139334-11.718903 26.139334-26.13831 0-14.44499-11.69332-26.164916-26.139334-26.164916-0.271176 0-0.490164 0.149403-0.73678 0.149403l-62.496379 0.146333c-1.425466-0.195451-2.90005-0.295735-4.373611-0.295735-19.677155 0-35.621289 16.141632-35.621289 36.114522L86.622358 888.550075c0 19.949354 15.96767 35.597753 35.670407 35.597753 1.916653 0 3.808746 0.292666 5.649674 0l61.022819 0.022513c0.099261 0 0.148379 0.048095 0.24764 0.048095 0.097214 0 0.146333-0.048095 0.24457-0.048095l0.73678 0 0-0.148379c13.413498-0.540306 24.174586-11.422144 24.174586-24.960485 0-13.55983-10.760065-24.441669-24.174586-24.981974l0-0.393973-50.949392 0 1.450025-402.275993L190.193225 471.409536z" fill="#515151" p-id="8307"></path><path d="M926.52241 433.948343c-19.283182-31.445176-47.339168-44.172035-81.289398-45.546336-1.77032-0.246617-3.536546-0.39295-5.380544-0.39295l-205.447139-0.688685c13.462616-39.059598 22.698978-85.58933 22.698978-129.317251 0-28.349675-3.193739-55.962569-9.041934-82.542948l-0.490164 0.049119c-10.638291-46.578852-51.736315-81.31498-100.966553-81.31498-57.264215 0-95.466282 48.15065-95.466282 106.126063 0 3.241834-0.294712 6.387477 0 9.532097-2.996241 108.386546-91.240027 195.548698-196.23636 207.513194l0 54.881958-0.785899 222.227314 0 229.744521 10.709923 0 500.025271 0.222057 8.746198-0.243547c19.35686 0.049119 30.239721-4.817726 47.803749-16.116049 16.682961-10.761088 29.236881-25.50079 37.490869-42.156122 2.260483-3.341095 4.028757-7.075139 5.106298-11.20111l77.018118-344.324116c1.056052-4.053316 1.348718-8.181333 1.056052-12.160971C943.643346 476.446249 938.781618 453.944769 926.52241 433.948343zM893.82573 486.837924l-82.983993 367.783411-0.099261-0.049119c-2.555196 6.141884-6.879688 11.596106-12.872169 15.427364-4.177136 2.727111-8.773827 4.351098-13.414521 4.964058-1.49812-0.195451-3.046383 0-4.620227 0l-477.028511-0.540306-0.171915-407.408897c89.323375-40.266076 154.841577-79.670527 188.596356-173.661202 0.072655 0.024559 0.124843 0.049119 0.195451 0.072655 2.99931-9.137101 6.313799-20.73423 8.697079-33.164331 5.551436-29.185716 5.258771-58.123792 5.258771-58.123792-4.937452-37.98001 25.940812-52.965306 44.364417-52.965306 25.304316 0.860601 50.263777 33.656541 50.263777 52.326762 0 0 5.600555 27.563776 5.649674 57.190537 0.048095 37.366026-4.6673 56.847729-4.6673 56.847729l-0.466628 0c-5.872754 30.879288-16.214287 60.138682-30.464849 86.964654l0.36839 0.342808c-2.358721 4.815679-3.709485 10.220782-3.709485 15.943111 0 19.922748 19.088754 21.742187 38.765909 21.742187l238.761895 0.270153c0 0 14.666024 0.465604 14.690584 0.465604l0 0.100284c12.132318-0.638543 24.221658 5.207605 31.100322 16.409738 5.504364 9.016351 6.437619 19.6045 3.486404 28.988218L893.82573 486.837924z" fill="#515151" p-id="8308"></path><path d="M264.827039 924.31872c0.319272 0.024559 0.441045 0.024559 0.295735-0.024559 0.243547-0.048095 0.367367-0.074701-0.295735-0.074701s-0.539282 0.026606-0.271176 0.074701C264.43409 924.343279 264.532327 924.343279 264.827039 924.31872z" fill="#515151" p-id="8309"></path></svg></span>
+                            <span th:data-comment-id="${comment.id}" th:id="${'comment-'+comment.id}" onclick="collapseComments(this)"><svg t="1706420525479" class="icon" viewBox="0 0 1114 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7182" width="20" height="25"><path d="M412.43236215 880.21486555h-7.85199339c-19.62998309-3.92599633-35.33396983-15.70398675-43.18596322-31.40797352l-27.48197645-66.74194336h-62.81594705c-70.66793969 0-129.55789039-58.88994998-129.55788966-129.55789038V271.68538194c0-74.59393674 58.88994998-129.55789039 129.55788966-129.55789039h526.08355351c70.66793969 0 129.55789039 54.96395365 129.55789039 129.55789039v380.82167634c0 70.66793969-58.88994998 129.55789039-129.55789039 129.55789039h-282.6717602l-58.88994997 78.51993306c-7.85199338 11.77798971-23.55598013 19.62998309-43.18596323 19.62998381z m-141.33588011-679.19742403c-39.25996689 0-70.66793969 31.40797353-70.66793967 70.66794042v380.82167635c0 39.25996689 31.40797353 70.66793969 70.66793967 70.66794039h102.07591322l39.25996689 94.22391984 70.66794042-94.22391984h310.15373665c39.25996689 0 70.66793969-31.40797353 70.66793969-70.66794039V271.68538194c0-39.25996689-31.40797353-70.66793969-70.66793969-70.66794042H271.09648204zM346.41018531 337.51125953h374.80181521a30.71001833 30.71001833 0 0 1 0 61.4418473H346.41018531a30.71001833 30.71001833 0 1 1 0-61.4418473z m0.23992193 202.23245021h190.06186059a30.97175162 30.97175162 0 1 1 0 61.89988056H346.67191787a30.97175162 30.97175162 0 1 1 0-61.89988056z" fill="#515151" p-id="7183"></path></svg></span>
+                            <span aria-hidden="true" class="pull-right" th:text="'点赞数：'+${comment.likeCount}"></span>
+                            <br>
+                            <span aria-hidden="true" class="pull-right" th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                        </div>
+                        <!--二级评论-->
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 collapse sub-comments"
+                             th:id="${'comment-collapse-'+comment.id}">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 comments">
+                                <input type="text" class="form-control" placeholder="评论">
+                                <button type="button" class="btn btn-success pull-right">发表</button>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 comments" th:each="comment:${comments}" >
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object img-rounded"
+                                                 th:src="${comment.avatarUrl}">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            <span th:text="${comment.name}"></span>
+                                        </h5>
+                                        <div class="commentcontent" th:text="${comment.content}"></div>
+                                        <div class="menu">
+                                            <span aria-hidden="true" class="pull-right"
+                                                  th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>发起人</h3>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle" th:src="${question.user.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <span th:text="${question.user.name}"></span>
+                        </h4>
+                        <h5 class="media-heading">
+                            <span th:text="${question.user.bio}"></span>
+                        </h5>
+
+                    </div>
+                </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>相关问题</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //展开二级评论
+    function collapseComments(e) {
+        var commentId = e.getAttribute("data-comment-id");
+        var commentCollapse = document.getElementById("comment-collapse-" + commentId);
+        var currentComment = document.querySelector(".current-comment");
+
+        if (commentCollapse.classList.contains("in")) {
+            commentCollapse.classList.remove("in");
+            commentCollapse.classList.remove("current-comment");
+            e.style.color = ""; // 还原原来的颜色
+        } else {
+            // 将所有已展开的${'comment-'+comment.id}颜色还原为原来的颜色
+            var expandedComments = document.querySelectorAll(".collapse.in");
+            for (var i = 0; i < expandedComments.length; i++) {
+                var commentId = expandedComments[i].id.replace("comment-collapse-", "");
+                var commentBtn = document.getElementById("comment-" + commentId);
+                commentBtn.style.color = "";
+            }
+            if (currentComment) {
+                currentComment.classList.remove("in");
+                currentComment.classList.remove("current-comment");
+            }
+            commentCollapse.classList.add("in");
+            commentCollapse.classList.add("current-comment");
+            e.style.color = "#499ef3"; // 修改颜色为蓝色
+        }
+    }
+
+    //提交评论
+    function post(){
+        var questionId = $("#question_id").val();
+        var content = $("#comment_content").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/comment",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "parentId": questionId,
+                "content": content,
+                "type": 1
+            }),
+            success: function (response){
+                if (response.status == 200) {
+                    alert("回复成功");
+                    refreshComments();
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status == 400) {
+                    alert(xhr.responseText);
+                } else if (xhr.status == 401) {
+                    alert(xhr.responseText);
+                    window.location.href = "/login";
+                } else if (xhr.status == 200){
+                    alert(xhr.responseText);
+                }
+            },
+            dataType: "json"
+        });
+    }
+
+    //点赞
+    function likeComment(likeIcon) {
+        var commentId = likeIcon.getAttribute("data-comment-id");
+        var isLiked = likeIcon.classList.contains('liked'); // 检查当前是否已经点赞
+
+        if (isLiked) {
+            // 如果已经点赞，则发送取消点赞的请求
+            addLike(commentId, likeIcon);
+        } else {
+            // 如果未点赞，则发送点赞的请求
+            addLike(commentId, likeIcon);
+        }
+    }
+
+    function addLike(commentId, likeIcon) {
+        $.ajax({
+            type: "POST",
+            url: "/like/add",
+            data: { commentId: commentId },
+            success: function(response) {
+                if (response === "login") {
+                    alert("点赞前需要登录哦！");
+                    window.location.href = '/login'; // 重定向到登录页面
+                } else {
+                    likeIcon.classList.add('liked');
+                    updateLikeCount(commentId, response.likeCount);
+                }
+            },
+            error: function() {
+                alert('点赞失败，请稍后重试');
+            }
+        });
+    }
+    function updateLikeCount(commentId, newLikeCount) {
+        $('#likes-' + commentId).text(newLikeCount);
+    }
+
+</script>
+
+</body>
+</html>

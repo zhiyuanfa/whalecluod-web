@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html" http-equiv="Content-Type" charset="UTF-8">
+    <title>WhaleCloud</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/whalecloud.css">
+    <!-- 引入 Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css">
+
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- 引入 Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><svg t="1706419335174" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2435" width="35" height="35" style="vertical-align: middle;"><path d="M823.210667 185.045333c181.205333 181.205333 181.205333 474.986667 0 656.192-181.184 181.205333-474.986667 181.205333-656.192 0a464.128 464.128 0 0 1-91.328-526.805333 37.333333 37.333333 0 0 1 67.477333 31.978667 389.482667 389.482667 0 0 0 76.650667 442.026666c152.042667 152.042667 398.570667 152.042667 550.613333 0 152.042667-152.042667 152.042667-398.549333 0-550.613333a389.397333 389.397333 0 0 0-419.818667-86.336 37.333333 37.333333 0 1 1-27.669333-69.333333 464.064 464.064 0 0 1 500.266667 102.890666zM218.944 166.4l2.666667 2.410667 254.250666 254.250666a96.021333 96.021333 0 0 1 105.258667 156.330667 96 96 0 0 1-157.333333-102.805333L168.810667 221.610667a37.333333 37.333333 0 0 1 50.133333-55.210667zM535.893333 488.874667a32 32 0 1 0-45.269333 45.269333 32 32 0 0 0 45.269333-45.269333z" fill="#515151" p-id="2436"></path></svg><span style="line-height: 35px;vertical-align: middle;">发现</span></h2>
+
+            <hr>
+            <div class="media" th:if="${pagination.questions}" th:each="question:${pagination.questions}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a th:text="${question.title}" th:href="@{'question/' + ${question.id}}">
+                        </a>
+                    </h4>
+
+                    <span class="text-desc">作者:<span th:text="${question.user.name}"></span>  ·<span th:text="${question.commentCount} "></span> 个回复 · <span th:text="${question.viewCount}"></span>  次浏览
+                        · <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
+                </div>
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${pagination.showPrevious}">
+                        <a href="/?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showFirstPage}">
+                        <a th:href="@{/(page=${pagination.page - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pagination.pages}" th:class="${pagination.page == page}?'active':''">
+                        <a th:text="${page}" th:href="@{/(page=${page})}">
+
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/(page=${pagination.page + 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12"></div>
+        <h3>热门话题</h3>
+        <div class="media" th:if="${pagination.questions}" th:each="question:${pagination.questions}">
+            <h5 class="media-heading">
+                <a th:text="${question.title}+'·'+${question.commentCount}+'个回复'+'·'+${question.viewCount}+'个浏览'" th:href="@{'question/' + ${question.id}}">
+                </a>
+            </h5>
+        </div>
+    </div>
+</div>
+</body>
+</html>

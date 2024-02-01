@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html" http-equiv="Content-Type" charset="UTF-8">
+    <title>发布-WhaleCloud</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/whalecloud.css">
+    <!-- 引入 Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css">
+
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- 引入 Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起讨论</h2>
+            <hr>
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="title">标题（简单扼要）</label>
+                    <input type="text" class="form-control" id="title" th:value="${title}" name="title" placeholder="问题标题...">
+                </div>
+                <div class="form-group">
+                    <label for="description">详情（必填，请参照右侧提示）</label>
+                    <textarea name="description" id="description" th:text="${description}" class="form-control" cols="30"
+                              rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tag">添加标签</label>
+                    <input type="text" class="form-control" id="tag" th:value="${tag}" name="tag" placeholder="输入标签，以，分隔">
+                </div>
+
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                 th:text="${error}"
+                                 th:if="${error != null}">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-publish">
+                                发布
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+            <h3>问题发起指南</h3>
+            <h4>· 问题标题：</h4>请用精简的语言描述您发布的问题，不超过25字<br>
+            <h4>· 问题补充：</h4>详细补充您的问题内容，并确保问题表述清晰直观，并提供相关资料：<br>
+            <h4>· 选择标签：</h4> 选择一个或者多个合适的标签，用逗号隔开不超过10个字<br>
+            <h4>· 关于积分：</h4>发起一个问题会消耗您20积分，每多一个回复你将获得5个积分奖励，为了您的利益，在发起问题的时候希望能够更好地描述您的问题以及多使用站内搜索功能。<br>
+        </div>
+    </div>
+</div>
+</body>
+</html>
