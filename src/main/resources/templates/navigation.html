@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        /* 添加的 CSS 使导航栏固定在顶部 */
+        .navbar-fixed-top {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1030; /* 确保导航栏位于页面其他元素之上 */
+        }
+
+        /* 添加一些顶部 padding 到 body 以确保页面内容不会被固定的导航栏遮挡 */
+        body {
+             /* 根据导航栏的实际高度调整这个值，这里假设为 70px 以提供一些额外的空间 */
+        }
+    </style>
+</head>
 <body>
 <div th:fragment="nav">
-    <nav class="navbar navbar-default">
+    <!-- 在这里添加 navbar-fixed-top 类来应用固定顶部的样式 -->
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">WhaleCloud</span>
+                    <span class="sr-only">Toggle navigation</span>
                 </button>
                 <a class="navbar-brand" href="/">WhaleCloud</a>
             </div>
@@ -39,6 +57,6 @@
         </div>
     </nav>
 </div>
-
+<!-- 页面的其他内容 -->
 </body>
 </html>

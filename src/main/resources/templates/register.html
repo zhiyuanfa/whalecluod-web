@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+    <title>WhaleCloud Register</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>User Registration</h2>
+    <h2>WhaleCloud User Register</h2>
     <form action="/register" method="post" enctype="multipart/form-data">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
@@ -73,5 +73,7 @@
         <input type="submit" value="Register">
     </form>
 </div>
+<!--//icp备案号-->
+<div th:insert="icp"></div>
 </body>
 </html>
