@@ -1,19 +1,17 @@
+### _欢迎阅读whalecloud-web的开发文档，我是项目开发者**zhengint**，容我介绍这个项目_
+
+这个项目是一个论坛类项目,使用springboot+mybatis+thymeleaf开发，是我趁寒假的时间开发的，目前仍处于开发期，基于底层功能的实现，我将这个项目上线并开源，在线访问：[whalecloud](https://web.whalecloud.site)
+
+本项目实现了：问题发布、回复、点赞、分页阅读等论坛应该具有的基础功能，采用用户注册和登录来创建session以实现身份鉴别
+
+项目中的注册涉及到头像文件上传，需要站长开通阿里云oss服务，自行创建桶，如有疑问请参考阿里云官方文档
+
+项目仍在开发期，我会继续完善这个项目，并持续开源！！！
+
+------------------------------------------------------------------------
+
 //2024.1.16
-项目创建，完成了页面导航栏布局样式，创建表
-sql语句:
-create table web.user(
-id INT AUTO_INCREMENT PRIMARY KEY,
-account_id VARCHAR(100),
-name VARCHAR(50),
-token CHAR(36),
-gmt_create BIGINT,
-gmt_modified BIGINT
-);
-
-ALTER TABLE USER ADD bio VARCHAR(256) NULL;
-
-ALTER TABLE USER ADD avatar_url VARCHAR(100) NULL;
-
+项目创建，完成了页面导航栏布局样式
 
 //2024.1.17
 加入github授权登录
@@ -22,53 +20,32 @@ ALTER TABLE USER ADD avatar_url VARCHAR(100) NULL;
 加入token验证登录状态，实现导航栏登录与未登录样式变化
 
 //2024.1.19
-实现发布问题，创建表
-sql语句:
-create table web.question(
-id INT AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(50),
-description TEXT,
-gmt_create BIGINT,
-gmt_modified BIGINT,
-creator INT,
-comment_count INT DEFAULT 0,
-view_count INT DEFAULT 0,
-like_count INT DEFAULT 0,
-tag VARCHAR(256)
-);
-
+实现发布问题，创建表question,及mysql版本控制表flyway_schema_history
 
 //2024.1.20
 实现问题展示列表
 
 //2024.1.21
-去除github授权登录，实现登录注册功能，创建表login
+去除github授权登录，实现登录注册功能，创建表login,user
 
 //2024.1.22
-实现问题回复功能，创建表
-sql语句:
-CREATE TABLE web.comment (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-parent_id BIGINT NOT NULL,
-type INT NOT NULL,
-commentator INT NOT NULL,
-content TEXT,
-gmt_create BIGINT NOT NULL,
-gmt_modified BIGINT NOT NULL,
-like_count BIGINT DEFAULT 0
-);
+实现问题回复功能，创建表comment
 
 //2024.1.24
-开始写二级回复，创建表
-    sub_comment_id 代表父问题的id
-    sql语句:
-CREATE TABLE web.sub_comment (
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
-comment_id BIGINT NOT NULL,
-sub_content TEXT,
-gmt_create BIGINT NOT NULL,
-gmt_modified BIGINT NOT NULL
-);
+开始写二级回复，创建表sub_comment
+暂时搁置，等待后续更新
 
-//2024.2.4
-加入icp备案号
+//2024.1.25
+写个人主页，集成个人资料，发布的问题，收到的回复，待完善
+
+//2024.1.28
+优化登录注册页，更换前端部分icon样式
+
+//2024.1.29
+实现点赞功能，点赞前后的前端展示待完善,创建表user_like
+
+//2024.1.30
+实现站内搜索功能
+
+//2024.1.31
+实现错误页，但是二级页面错误样式会掉，但不影响功能，待完善
