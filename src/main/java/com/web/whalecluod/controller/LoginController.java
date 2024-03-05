@@ -59,12 +59,12 @@ public class LoginController {
     }
 
     private String uploadToOSS(MultipartFile file) {
-        String endpoint = "oss-cn-guangzhou.aliyuncs.com";  // 替换为您的阿里云 OSS 地域节点
-        String accessKeyId = "LTAI5tFCGGA8ZLcX5z61Zcne";  // 替换为您的阿里云访问密钥 ID
-        String accessKeySecret = "zb7aGbR3zUqfMhuLfrIdK8uX9SzdW9";  // 替换为您的阿里云访问密钥 Secret
-        String bucketName = "whale924";  // 替换为您的阿里云 OSS 存储桶名称
+        String endpoint = "";  // 替换为您的阿里云 OSS 地域节点
+        String accessKeyId = "";  // 替换为您的阿里云访问密钥 ID
+        String accessKeySecret = "";  // 替换为您的阿里云访问密钥 Secret
+        String bucketName = "";  // 替换为您的阿里云 OSS 存储桶名称
 
-        String folderName = "web";  // 指定要上传的文件夹名称
+        String folderName = "";  // 指定要上传的文件夹名称
         String fileName = folderName + "/" + UUID.randomUUID().toString() + ".jpg";  // 使用文件夹名称作为文件的前缀
 
         try (InputStream inputStream = file.getInputStream()) {
