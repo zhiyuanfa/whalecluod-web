@@ -69,6 +69,7 @@ public class QuestionService {
 
         Integer totalCount = questionMapper.countByUserId(userId);
 
+
         if (totalCount % size == 0){
             totalPage = totalCount / size;
         }else {

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.io.Serial;
 @Mapper
 public interface UserMapper {
-    @Insert("insert into `user`(name,account_id,token,gmt_create,gmt_modified,avatar_Url) values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified}),#{avatarUrl}")
+    @Insert("insert into `user`(name,account_id,token,gmt_create,gmt_modified,avatar_Url,bio) values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl},null)")
     void insert(User user);
     @Select("select * from `user` where token = #{token}")
     User findByToken(@Param("token") String token);
